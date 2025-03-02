@@ -9,7 +9,7 @@ async function AllBooks() {
   if (!response.ok) return <div>오류가 발생했습니다 ...</div>;
 
   const allBooks: BookData[] = await response.json();
-  console.log(allBooks);
+
   return (
     <div>
       {allBooks.map((book) => (
@@ -28,7 +28,6 @@ async function RecommendBooks() {
   if (!response.ok) return <div>오류가 발생했습니다 ...</div>;
 
   const recommendBooks: BookData[] = await response.json();
-  console.log(recommendBooks);
 
   return (
     <div>
