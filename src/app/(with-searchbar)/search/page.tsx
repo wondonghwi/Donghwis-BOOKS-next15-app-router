@@ -1,7 +1,8 @@
+import { Suspense } from 'react';
 import BookItem from '@/components/book-item';
 import BookListSkeleton from '@/components/skeleton/book-list-skeleton';
 import { BookData } from '@/types';
-import { Suspense } from 'react';
+
 async function SearchResult({ q }: { q: string }) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/search?q=${q}`,

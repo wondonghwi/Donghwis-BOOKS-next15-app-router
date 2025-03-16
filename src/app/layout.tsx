@@ -10,7 +10,7 @@ async function Footer() {
       cache: 'force-cache',
     },
   );
-  if (!response.ok) return <div>오류가 발생했습니다 ...</div>;
+  if (!response.ok) return <footer>@원동휘</footer>;
   const books: BookData[] = await response.json();
   return (
     <>
