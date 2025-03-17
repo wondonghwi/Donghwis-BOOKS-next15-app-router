@@ -20,16 +20,23 @@ Next.js 15 app-router 기반의 도서 관리 애플리케이션입니다.
 
 ## 프로젝트 구조
 
-- **src/app**: 메인 애플리케이션 코드
-  - `layout.tsx`: 전체 앱의 레이아웃 구조 정의
-  - `page.tsx`: 메인 페이지 컴포넌트
-  - `book/[id]/page.tsx`: 개별 도서 상세 페이지
-  - `globals.css`: 전역 스타일 정의
-
-### 필수 조건
-
-- Node.js 18.17 이상
-- Yarn 패키지 매니저
+- **src**: 소스 코드 루트 디렉토리
+  - **actions**: 서버 액션 (리뷰 생성/삭제)
+  - **app**: App Router 기반 페이지 구조
+    - **(with-searchbar)**: 검색바 포함 레이아웃
+    - **search**: 검색 관련 페이지
+    - **book/[id]**: 개별 도서 상세 페이지
+    - `layout.tsx`: 루트 레이아웃
+    - `page.tsx`: 메인 페이지
+  - **components**: 재사용 가능한 컴포넌트
+    - `skeleton`: 로딩 스켈레톤 컴포넌트
+    - `book-item.tsx`: 도서 아이템 컴포넌트
+    - `review-editor.tsx`: 리뷰 에디터 컴포넌트
+    - `review-item.tsx`: 리뷰 아이템 컴포넌트
+    - `searchbar.tsx`: 검색바 컴포넌트
+  - **mock**: 목업 데이터
+  - **util**: 유틸리티 함수
+  - `types.ts`: 타입 정의 파일
 
 ### 설치
 
