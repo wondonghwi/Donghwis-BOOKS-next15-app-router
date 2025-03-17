@@ -2,6 +2,8 @@
 
 Next.js 15 기반의 도서 관리 애플리케이션입니다.
 
+[🌐 서비스 접근하기](https://vercel.com/wondonghwis-projects/onebite-books-app/73huX5BroHAHmNss2CGNNt7JaX8p)
+
 ## 기술 스택
 
 - **프레임워크**: Next.js 15.2.0
@@ -36,6 +38,13 @@ Next.js 15 기반의 도서 관리 애플리케이션입니다.
 yarn install
 ```
 
+```bash
+# 개발서버 실행
+yarn install
+```
+
 ### 환경 변수 설정
 
-`.env.local` 파일을 생성하고 변수를 설정하세요
+`.env.local` 파일을 생성하고 변수를 설정해야합니다.
+
+- 개발 서버가 실행되면, 브라우저에서 http://localhost:3000에 접속하여 애플리케이션을 확인할 수 있습니다.

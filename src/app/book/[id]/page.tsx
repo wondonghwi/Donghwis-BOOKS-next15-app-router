@@ -4,10 +4,23 @@ import { notFound } from 'next/navigation';
 import ReviewItem from '@/components/review-item';
 import ReviewEditor from '@/components/review-editor';
 import Image from 'next/image';
-// export const dynamicParams = false;
 
-export function generateStaticParams() {
-  return [{ id: '1' }, { id: '2' }, { id: '3' }];
+// export const dynamicParams = false;
+export async function generateStaticParams() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
+    {
+      cache: 'force-cache',
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Book fetch failed : ${response.statusText}`);
+  }
+
+  const books: BookData[] = await response.json();
+
+  return books.map((book) => ({ id: book.id.toString() }));
 }
 
 async function BookDetail({ bookId }: { bookId: string }) {
