@@ -1,8 +1,8 @@
 # 📚 Donghwi's BOOKS
 
-Next.js 15 기반의 도서 관리 애플리케이션입니다.
+Next.js 15 app-router 기반의 도서 관리 애플리케이션입니다.
 
-[🌐 서비스 접근하기](https://vercel.com/wondonghwis-projects/onebite-books-app/73huX5BroHAHmNss2CGNNt7JaX8p)
+[🌐 서비스 접근하기](https://onebite-books-74jpe79tf-wondonghwis-projects.vercel.app/)
 
 ## 기술 스택
 
