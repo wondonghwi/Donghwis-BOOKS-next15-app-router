@@ -2,7 +2,7 @@
 
 Next.js 15 app-router 기반의 도서 관리 애플리케이션입니다.
 
-[🌐 서비스 링크](https://onebite-books-app-rust-eight.vercel.app/)
+[🌐 서비스 링크](https://onebite-books-app-rust-eight.vercel.app/) (⛔️ 현재는 접속되지않습니다.)
 
 ## 기술 스택
 
