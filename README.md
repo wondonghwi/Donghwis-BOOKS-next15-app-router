@@ -6,10 +6,11 @@ Next.js 15 app-router 기반의 도서 관리 애플리케이션입니다.
 
 ## 기술 스택
 
-- **프레임워크**: Next.js 15.2.0
+- **프레임워크**: Next.js 15.5.9
 - **언어**: TypeScript
-- **React 버전**: React 19.0.0
+- **React 버전**: React 19.2.3
 - **라우팅**: App Router
+- **패키지 매니저**: pnpm
 
 ## 주요 기능
 
@@ -38,20 +39,28 @@ Next.js 15 app-router 기반의 도서 관리 애플리케이션입니다.
   - **util**: 유틸리티 함수
   - `types.ts`: 타입 정의 파일
 
-### 설치
+## 설치 및 실행
 
 ```bash
 # 의존성 설치
-yarn install
+pnpm install
+
+# 개발 서버 실행
+pnpm dev
+
+# 프로덕션 빌드
+pnpm build
+
+# 프로덕션 서버 실행
+pnpm start
 ```
+
+## 환경 변수 설정
+
+`.env.local` 파일을 생성하고 아래 변수를 설정해야 합니다:
 
 ```bash
-# 개발서버 실행
-yarn install
+NEXT_PUBLIC_API_SERVER_URL=http://localhost:12345
 ```
 
-### 환경 변수 설정
-
-`.env.local` 파일을 생성하고 변수를 설정해야합니다.
-
-- 개발 서버가 실행되면, 브라우저에서 http://localhost:3000에 접속하여 애플리케이션을 확인할 수 있습니다.
+개발 서버가 실행되면, 브라우저에서 http://localhost:3000 에 접속하여 애플리케이션을 확인할 수 있습니다.
