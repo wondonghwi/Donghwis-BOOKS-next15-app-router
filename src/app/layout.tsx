@@ -34,7 +34,7 @@ export default function RootLayout({
       <body>
         <div className={style.container}>
           <header>
-            <Link href={'/'}>📚 Donghwi&apos;s BOOKS</Link>
+            <Link href={'/'}>📚 Donghwi&apos;s Books</Link>
           </header>
           <main>{children}</main>
           <Footer />

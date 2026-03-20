@@ -4,40 +4,57 @@ import { notFound } from 'next/navigation';
 import ReviewItem from '@/components/review-item';
 import ReviewEditor from '@/components/review-editor';
 import Image from 'next/image';
+import { cache } from 'react';
 
-// export const dynamicParams = false;
-export async function generateStaticParams() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
-    {
-      cache: 'force-cache',
-    },
-  );
+export const revalidate = 300;
 
-  if (!response.ok) {
-    throw new Error(`Book fetch failed : ${response.statusText}`);
-  }
+const BOOK_DETAIL_REVALIDATE_SECONDS = 300;
 
-  const books: BookData[] = await response.json();
-
-  return books.map((book) => ({ id: book.id.toString() }));
-}
-
-async function BookDetail({ bookId }: { bookId: string }) {
+const getBook = cache(async (bookId: string) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${bookId}`,
     {
-      cache: 'force-cache',
+      next: {
+        revalidate: BOOK_DETAIL_REVALIDATE_SECONDS,
+      },
     },
   );
-  if (!response.ok) {
-    if (response.status === 404) {
-      notFound();
-    }
-    return <div>오류가 발생했습니다 ...</div>;
+
+  if (response.status === 404) {
+    return null;
   }
 
-  const book: BookData = await response.json();
+  if (!response.ok) {
+    throw new Error(`Book fetch failed: ${response.statusText}`);
+  }
+
+  return (await response.json()) as BookData;
+});
+
+const getBookReviews = cache(async (bookId: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`,
+    {
+      next: {
+        revalidate: BOOK_DETAIL_REVALIDATE_SECONDS,
+        tags: [`reviews-${bookId}`],
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Review fetch failed: ${response.statusText}`);
+  }
+
+  return (await response.json()) as ReviewData[];
+});
+
+async function BookDetail({ bookId }: { bookId: string }) {
+  const book = await getBook(bookId);
+
+  if (!book) {
+    notFound();
+  }
 
   const { title, subTitle, description, author, publisher, coverImgUrl } = book;
 
@@ -64,33 +81,24 @@ async function BookDetail({ bookId }: { bookId: string }) {
 }
 
 async function ReviewList({ bookId }: { bookId: string }) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/review/book/${bookId}`,
-    {
-      next: {
-        tags: [`reviews-${bookId}`],
-      },
-    },
-  );
+  try {
+    const reviews = await getBookReviews(bookId);
 
-  if (!response.ok) {
-    throw new Error(`Review fetch failed : ${response.statusText}`);
+    return (
+      <section>
+        <ul>
+          {reviews.map((review) => (
+            <ReviewItem
+              key={review.id}
+              {...review}
+            />
+          ))}
+        </ul>
+      </section>
+    );
+  } catch {
+    return <div>리뷰를 불러오지 못했습니다 ...</div>;
   }
-
-  const reviews: ReviewData[] = await response.json();
-
-  return (
-    <section>
-      <ul>
-        {reviews.map((review) => (
-          <ReviewItem
-            key={review.id}
-            {...review}
-          />
-        ))}
-      </ul>
-    </section>
-  );
 }
 
 export async function generateMetadata({
@@ -99,28 +107,31 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${id}`,
-    {
-      cache: 'force-cache',
-    },
-  );
+  try {
+    const book = await getBook(id);
 
-  if (!response.ok) {
-    throw new Error(`Book fetch failed : ${response.statusText}`);
-  }
+    if (!book) {
+      return {
+        title: "Donghwi's Books",
+        description: '도서를 찾을 수 없습니다.',
+      };
+    }
 
-  const book: BookData = await response.json();
-
-  return {
-    title: `${book.title} : 한입북스`,
-    description: `${book.description}`,
-    openGraph: {
-      title: `${book.title} : 한입북스`,
+    return {
+      title: `${book.title} : Donghwi's Books`,
       description: `${book.description}`,
-      images: [book.coverImgUrl],
-    },
-  };
+      openGraph: {
+        title: `${book.title} : Donghwi's Books`,
+        description: `${book.description}`,
+        images: [book.coverImgUrl],
+      },
+    };
+  } catch {
+    return {
+      title: "Donghwi's Books",
+      description: '도서 정보를 불러오지 못했습니다.',
+    };
+  }
 }
 
 export default async function Page({

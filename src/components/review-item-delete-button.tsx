@@ -2,6 +2,7 @@
 
 import { deleteReviewAction } from '@/actions/delete-review.action';
 import { useActionState, useEffect, useRef } from 'react';
+import { ReviewActionState } from '@/types';
 
 function ReviewItemDeleteButton({
   reviewId,
@@ -13,7 +14,7 @@ function ReviewItemDeleteButton({
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction, isPending] = useActionState(
     deleteReviewAction,
-    null,
+    null as ReviewActionState,
   );
 
   useEffect(() => {

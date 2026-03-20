@@ -1,7 +1,9 @@
 import BookPage from '@/app/book/[id]/page';
 import Modal from '@/components/modal';
 
-export default function Page(props: any) {
+type BookPageProps = Parameters<typeof BookPage>[0];
+
+export default function Page(props: BookPageProps) {
   return (
     <Modal>
       <BookPage {...props} />

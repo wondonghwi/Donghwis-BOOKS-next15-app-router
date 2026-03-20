@@ -1,4 +1,4 @@
-# 📚 Donghwi's BOOKS
+# 📚 Donghwi's Books
 
 Next.js 15 app-router 기반의 도서 관리 애플리케이션입니다.
 
