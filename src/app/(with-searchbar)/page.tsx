@@ -58,11 +58,11 @@ async function RecommendBooks() {
 }
 
 export const metadata: Metadata = {
-  title: "Donghwi's Books",
-  description: "Browse books available on Donghwi's Books.",
+  title: '한입 북스',
+  description: '한입 북스에 등록된 도서를 만나보세요.',
   openGraph: {
-    title: "Donghwi's Books",
-    description: "Browse books available on Donghwi's Books.",
+    title: '한입 북스',
+    description: '한입 북스에 등록된 도서를 만나보세요.',
     images: ['/thumbnail.png'],
   },
 };

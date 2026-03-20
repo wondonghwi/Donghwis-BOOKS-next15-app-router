@@ -15,8 +15,3 @@ export interface ReviewData {
   createdAt: string;
   bookId: number;
 }
-
-export type ReviewActionState = {
-  status: boolean;
-  error: string;
-} | null;

@@ -3,12 +3,11 @@
 import { createReviewAction } from '@/actions/create-review.action';
 import style from './review-editor.module.css';
 import { useActionState, useEffect } from 'react';
-import { ReviewActionState } from '@/types';
 
 export default function ReviewEditor({ bookId }: { bookId: string }) {
   const [state, formAction, isPending] = useActionState(
     createReviewAction,
-    null as ReviewActionState,
+    null,
   );
 
   useEffect(() => {

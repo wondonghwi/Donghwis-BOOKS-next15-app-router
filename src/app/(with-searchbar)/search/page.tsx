@@ -35,10 +35,10 @@ export async function generateMetadata({
 }) {
   const { q } = await searchParams;
   return {
-    title: `${q} : Donghwi's Books Search`,
+    title: `${q} : 한입북스 검색`,
     description: `${q}의 검색 결과입니다.`,
     openGraph: {
-      title: `${q} : Donghwi's Books Search`,
+      title: `${q} : 한입북스 검색`,
       description: `${q}의 검색 결과입니다.`,
       images: ['/thumbnail.png'],
     },

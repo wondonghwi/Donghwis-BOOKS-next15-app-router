@@ -1,11 +1,7 @@
 'use server';
 import { revalidateTag } from 'next/cache';
-import { ReviewActionState } from '@/types';
 
-export async function createReviewAction(
-  _: ReviewActionState,
-  formData: FormData,
-) {
+export async function createReviewAction(_: any, formData: FormData) {
   const bookId = formData.get('bookId')?.toString();
   const content = formData.get('content')?.toString();
   const author = formData.get('author')?.toString();
