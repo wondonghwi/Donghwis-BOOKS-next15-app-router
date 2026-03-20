@@ -1,8 +1,12 @@
 'use server';
 
 import { revalidateTag } from 'next/cache';
+import { ActionState } from '@/types';
 
-export async function deleteReviewAction(_: any, formData: FormData) {
+export async function deleteReviewAction(
+  _: ActionState | null,
+  formData: FormData,
+) {
   const reviewId = formData.get('reviewId')?.toString();
   const bookId = formData.get('bookId')?.toString();
 

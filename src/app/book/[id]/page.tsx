@@ -5,6 +5,10 @@ import ReviewItem from '@/components/review-item';
 import ReviewEditor from '@/components/review-editor';
 import Image from 'next/image';
 
+export interface BookPageProps {
+  params: Promise<{ id: string }>;
+}
+
 // export const dynamicParams = false;
 export async function generateStaticParams() {
   const response = await fetch(
@@ -95,9 +99,7 @@ async function ReviewList({ bookId }: { bookId: string }) {
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+}: BookPageProps) {
   const { id } = await params;
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/${id}`,
@@ -125,9 +127,7 @@ export async function generateMetadata({
 
 export default async function Page({
   params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+}: BookPageProps) {
   const { id } = await params;
 
   return (
