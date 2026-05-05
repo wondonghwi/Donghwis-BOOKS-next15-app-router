@@ -1,0 +1,43 @@
+name: Supabase Keep Alive
+
+on:
+  schedule:
+    - cron: '0 0 */5 * *'
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    env:
+      API_SERVER_URL: https://onebite-books-server-wondonghwis-projects.vercel.app
+
+    steps:
+      - name: Call books API
+        run: |
+          set -euo pipefail
+
+          api_server_url="${API_SERVER_URL%/}"
+          response_file="/tmp/keep-alive-response.json"
+
+          curl \
+            --fail \
+            --show-error \
+            --silent \
+            --location \
+            --max-time 30 \
+            --header "Accept: application/json" \
+            "$api_server_url/book/random" \
+            > "$response_file"
+
+          node - "$response_file" <<'NODE'
+          const fs = require('node:fs');
+
+          const responsePath = process.argv[2];
+          const data = JSON.parse(fs.readFileSync(responsePath, 'utf8'));
+
+          if (!Array.isArray(data) || data.length === 0) {
+            throw new Error('Keep-alive API returned an empty result.');
+          }
+          NODE
+
+          echo "Keep-alive request completed with a non-empty books response."
